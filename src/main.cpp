@@ -6,15 +6,15 @@
 // doesnt register another click. 
 
 
-const char ctrlKey = KEY_LEFT_GUI;   // apple command key
-const char shiftKey = KEY_LEFT_SHIFT;
+char ctrlKey = KEY_LEFT_GUI;   // apple command key
+char shiftKey = KEY_LEFT_SHIFT;
 const int buttonPin = 4; // using pin 4 on the pro micro 
 int debounceDelay = 50;  // rough guess here of 50 milliseconds, ymmv 
 int lastSteadyState = LOW; // read the previous state of pin 4
 int lastFlickerableState = LOW; // 
 int currentState; // current state of pin 4
 unsigned long lastDebounceTime = 0; // setting the time to zero here, im sure there is a better way to do this. basicaly read this as the time of the last button press
-int buttonState = 0; 
+int buttonState; 
 int previousButtonState = 0;
 
 
@@ -23,7 +23,6 @@ int previousButtonState = 0;
 void setup() 
 {
   pinMode(buttonPin,INPUT_PULLUP); 
-  digitalWrite(buttonPin, HIGH);  
   Keyboard.begin();
 }
 
@@ -31,7 +30,7 @@ void setup()
 void loop() 
 {
   // lets read the current state of the button attached to pin 4
-  buttonState = digitalRead(buttonPin);
+  currentState = digitalRead(buttonPin);
   
   // if the pin state is not HIGH (default) then that means the button was pressed. There is noise here too so we need to debounce  
   if (currentState != lastFlickerableState)
